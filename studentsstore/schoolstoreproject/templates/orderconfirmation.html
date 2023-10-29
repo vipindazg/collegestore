@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div style="text-align: center;">
+        <div style="background-color: white;">
+            <link rel="stylesheet" type="text/css" href="{% static 'CSS/login.css' %}">
+
+            <div class="centered">
+                <h4>ORDER CONFIRMED</h4>
+                <h4>THANK YOU</h4>
+                <div class="centered-buttons">
+                    <a href="{% url 'login' %}">
+                        <button>Logout</button>
+                    </a>
+                    <a href="{% url 'newpage' %}">
+                        <button>CONTINUE</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+{% endblock %}

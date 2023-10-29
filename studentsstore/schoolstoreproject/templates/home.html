@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <style>
+        h1{
+            color: white;
+            text-align: center; /* Center-align the text */
+        }
+        h2{
+            color: yellow;
+            text-align: center; /* Center-align the text */
+        }
+        .centered {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Center vertically within the viewport */
+        }
+    </style>
+
+    <div class="centered">
+        <h2>Welcome to our website</h2>
+        <a href="{% url 'login' %}">
+            <button style="display: block;">Login</button>
+        </a>
+    </div>
+{% endblock %}

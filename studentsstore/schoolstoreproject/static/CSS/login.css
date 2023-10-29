@@ -1,0 +1,9 @@
+/* orderconfirmation.css */
+.centered-buttons {
+    text-align: center;
+}
+
+.centered-buttons a {
+    display: inline-block;
+    margin: 10px;
+}

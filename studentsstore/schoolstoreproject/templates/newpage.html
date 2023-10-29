@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Form Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            display: none;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+        }
+
+        #materials-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button id="showFormButton" onclick="showForm()">Show Form</button>
+
+    <div class="form-container" id="formContainer">
+        <h2>Fill out the Form</h2>
+        <form method="post" action="{% url 'orderconfirmation' %}">
+            {% csrf_token %}
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="dob">DOB:</label>
+            <input type="date" id="dob" name="dob"><br>
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age"><br>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4"></textarea><br>
+
+            <label for="department">Department:</label>
+            <select id="department" name="department" onchange="populateCourses()">
+                <option value="Computer_Science">Computer_Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Economics">Economics</option>
+                <option value="History">History</option>
+                <option value="Physics">Physics</option>
+
+            </select><br>
+
+            <label for="course">Course:</label>
+            <select id="course" name="course">
+                <!-- Options for Courses will be populated using JavaScript based on the selected department -->
+            </select><br>
+
+            <label for="purpose">Purpose:</label>
+            <select id="purpose" name="purpose" onchange="showMaterialsCheckbox()">
+                <option value="enquiry">Enquiry</option>
+                <option value="placeorder">Place Order</option>
+                <option value="return">Return</option>
+            </select><br>
+
+            <div id="materials-container">
+                <label>Materials:</label>
+                <input type="checkbox" name="materials" value="Eraser"> Eraser
+                <input type="checkbox" name="materials" value="Books"> Books
+                <input type="checkbox" name="materials" value="Note Book"> Note Book
+                <input type="checkbox" name="materials" value="Pen"> Pen
+                <input type="checkbox" name="materials" value="Exam Papers"> Exam Papers
+                <!-- Add more materials as needed -->
+            </div>
+
+            <textarea id="enquiry-details" name="enquiry-details" rows="4" style="display: none;"></textarea>
+
+            <input type="submit" value="Submit">
+
+        </form>
+    </div>
+
+    <script>
+        function showForm() {
+            var formContainer = document.getElementById("formContainer");
+            formContainer.style.display = "block";
+        }
+
+        function populateCourses() {
+            var department = document.getElementById("department");
+            var course = document.getElementById("course");
+            course.innerHTML = ''; // Clear existing options
+
+            if (department.value === "Computer_Science") {
+                var commerceCourses = ["BSC Computer Science", "BSC Computer Engineering", "MSC CS"];
+                for (var i = 0; i < commerceCourses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = commerceCourses[i];
+                    option.text = commerceCourses[i];
+                    course.appendChild(option);
+                }
+            } else if (department.value === "Mathematics") {
+                var scienceCourses = ["BSc Mathematics", "BSc Applied Mathematics", "MSC Mathematics"];
+                for (var i = 0; i < scienceCourses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = scienceCourses[i];
+                    option.text = scienceCourses[i];
+                    course.appendChild(option);
+                }
+            }else if (department.value === "Economics") {
+                var scienceCourses = ["BA Economics", "BA International Economics", "MA Economics"];
+                for (var i = 0; i < scienceCourses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = scienceCourses[i];
+                    option.text = scienceCourses[i];
+                    course.appendChild(option);
+                }
+            }else if (department.value === "History") {
+                var scienceCourses = ["BA History", "BA History and Political Science", "MA History"];
+                for (var i = 0; i < scienceCourses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = scienceCourses[i];
+                    option.text = scienceCourses[i];
+                    course.appendChild(option);
+                }
+            }else if (department.value === "Physics") {
+                var scienceCourses = ["BSC Physics", "BSC Astrophysics", "MSC Physics"];
+                for (var i = 0; i < scienceCourses.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = scienceCourses[i];
+                    option.text = scienceCourses[i];
+                    course.appendChild(option);
+                }
+            }
+        }
+
+        function showMaterialsCheckbox() {
+            var purpose = document.getElementById("purpose");
+            var materialsContainer = document.getElementById("materials-container");
+            var enquiryDetails = document.getElementById("enquiry-details");
+
+            materialsContainer.style.display = "none";
+            enquiryDetails.style.display = "none";
+
+            if (purpose.value === "placeOrder") {
+                materialsContainer.style.display = "block";
+            } else if (purpose.value === "enquiry") {
+                enquiryDetails.style.display = "block";
+            }
+            if (purpose.value === "placeorder") {
+                materialsContainer.style.display = "block";
+            } else if (purpose.value === "enquiry") {
+            } else if (purpose.value === "return") {
+                materialsContainer.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+{% endblock %}
